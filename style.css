@@ -244,3 +244,81 @@ nav a:hover{
 .order-box button:hover{
     background:#8d2cff;
 }
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px){
+
+header{
+    flex-direction:column;
+    gap:15px;
+    padding:15px;
+    text-align:center;
+}
+
+nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+}
+
+nav a{
+    margin:5px;
+    font-size:14px;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+}
+
+.hero{
+    flex-direction:column;
+    text-align:center;
+    padding:40px 20px;
+}
+
+.left,
+.right{
+    width:100%;
+}
+
+.left h1{
+    font-size:36px;
+}
+
+.left p{
+    font-size:16px;
+}
+
+.banner-box{
+    margin-top:25px;
+    height:220px;
+    font-size:24px;
+}
+
+.packages,
+.membership,
+.order-section{
+    padding:50px 20px;
+}
+
+.card-box{
+    grid-template-columns:1fr;
+}
+
+.order-box form{
+    width:100%;
+}
+
+.order{
+    width:100%;
+}
+
+.card button{
+    font-size:15px;
+}
+
+}
