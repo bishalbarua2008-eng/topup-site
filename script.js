@@ -33,9 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     if (form) {
         form.addEventListener("submit", function (e) {
+
             e.preventDefault();
 
-            const packageName = document.querySelector(".order-section select").value;
+            const packageName = selectBox.value;
             const uid = document.querySelector(".order-section input[type='text']").value;
             const payment = document.querySelectorAll(".order-section select")[1].value;
             const trx = document.querySelectorAll(".order-section input")[1].value;
@@ -49,21 +50,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 trx: trx
             };
 
+            // Local Storage
             let orders = JSON.parse(localStorage.getItem("orders")) || [];
             orders.push(order);
             localStorage.setItem("orders", JSON.stringify(orders));
 
-           showSuccessMessage();
+            // Google Sheet Save
+            fetch("https://script.google.com/macros/s/AKfycbzdFLpEyyC4LOfJA6c9cFw41LZPYElQXSqPsOlV6VXl1RknHDSMfkrsLExzHl3r5PRd/exec", {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify(order)
+            })
+            .then(() => {
+                console.log("Order sent to Google Sheet");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+            showSuccessMessage();
 
             form.reset();
+
         });
     }
 
 });
+
 // =========================
-// SUCCESS POPUP (SAFE ADD)
+// SUCCESS POPUP
 // =========================
 function showSuccessMessage() {
+
     const popup = document.createElement("div");
 
     popup.innerHTML = "🎉 Order Placed Successfully!";
@@ -84,12 +102,10 @@ function showSuccessMessage() {
 
     document.body.appendChild(popup);
 
-    // slide in
     setTimeout(() => {
         popup.style.transform = "translateX(0)";
     }, 100);
 
-    // remove
     setTimeout(() => {
         popup.style.transform = "translateX(120%)";
         setTimeout(() => popup.remove(), 400);
